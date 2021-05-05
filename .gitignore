@@ -133,3 +133,6 @@ dmypy.json
 
 # ignore dataset images
 dataset
+
+# lightning logs 
+lightning_logs
