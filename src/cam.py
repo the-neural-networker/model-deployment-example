@@ -80,7 +80,7 @@ def main():
                     
                 i += 1
             
-            if batch_idx == args.num_batches:
+            if batch_idx == args.num_batches - 1:
                 break
 
 class CamModel(nn.Module):
@@ -120,7 +120,7 @@ def get_args():
     parser.add_argument("--num_workers", default=4, type=int)
     parser.add_argument("--checkpoint_dir", default="./checkpoints/net-epoch=12-val_loss=0.04.ckpt", type=str)
     parser.add_argument("--cam_path", default="./class_activation_maps/", type=str)
-    parser.add_argument("--num_batches", default=20, type=int)
+    parser.add_argument("--num_batches", default=5, type=int)
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args() 
     return args
