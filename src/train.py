@@ -1,10 +1,8 @@
 import os 
 import sys 
 sys.path.append(os.path.abspath(os.path.pardir))
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
 
-import torch 
-from torchvision import transforms
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, LearningRateMonitor
 
