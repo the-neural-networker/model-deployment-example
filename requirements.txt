@@ -7,3 +7,4 @@ Pillow==8.2.0
 pytorch_lightning==1.2.10
 opencv-contrib-python==4.5.1.48
 gunicorn==20.1.0
+
