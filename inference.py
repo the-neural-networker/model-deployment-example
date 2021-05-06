@@ -19,7 +19,7 @@ def get_cam_model(model):
     return model
 
 
-checkpoint_dir = "../checkpoints/net-epoch=12-val_loss=0.04.ckpt"
+checkpoint_dir = "./checkpoints/net-epoch=12-val_loss=0.04.ckpt"
 model = get_model(checkpoint_dir)
 weights = list(list(model.children())[0].children())[-1].weight.cpu()
 biases = list(list(model.children())[0].children())[-1].bias.cpu()
