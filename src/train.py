@@ -11,28 +11,13 @@ from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, Learning
 
 from src.dataset import CatsVsDogsDataModule 
 from src.model import Net 
+from src.utils.transform import get_image_transforms
 
 
 def main() -> None: 
     args = get_args() 
 
-    train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=(0.485, 0.456, 0.406), 
-            std=(0.229, 0.224, 0.225))
-    ])
-
-    test_transform = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=(0.485, 0.456, 0.406), 
-            std=(0.229, 0.224, 0.225))
-    ])
+    train_transform, test_transform = get_image_transforms()
     
     dm = CatsVsDogsDataModule(
         data_dir=args.data_dir,
