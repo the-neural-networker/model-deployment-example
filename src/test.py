@@ -29,7 +29,8 @@ def main():
     )
     dm.setup()
 
-    model = Net.load_from_checkpoint(args.checkpoint_dir)
+    model = Net()
+    model.load_state_dict(torch.load(args.checkpoint_dir))
     model.to(device="cuda")
     model.eval()
 
@@ -60,7 +61,7 @@ def get_args():
     parser.add_argument("--data_dir", default="../dataset/", type=str)
     parser.add_argument("--batch_size", default=64, type=int) 
     parser.add_argument("--num_workers", default=4, type=int)
-    parser.add_argument("--checkpoint_dir", default="../checkpoints/net-epoch=12-val_loss=0.04.ckpt", type=str)
+    parser.add_argument("--checkpoint_dir", default="../checkpoints/net-epoch=12-val_loss=0.04.pth.tar", type=str)
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args() 
     return args

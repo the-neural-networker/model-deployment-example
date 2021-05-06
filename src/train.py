@@ -32,9 +32,11 @@ def main() -> None:
         monitor="val_loss",
         dirpath="../checkpoints/",
         filename="net-{epoch:02d}-{val_loss:.2f}",
-        save_top_k=-1
+        save_top_k=-1,
+
     )
 
+    checkpoint_callback.FILE_EXTENSION = ".pth.tar"
     lr_monitor = LearningRateMonitor(logging_interval="step")
 
     trainer = pl.Trainer(gpus=args.gpus,
