@@ -32,7 +32,8 @@ def main():
         )
     dm.setup()
 
-    model = Net.load_from_checkpoint(args.checkpoint_dir)
+    model = Net()
+    model.load_state_dict(torch.load(args.checkpoint_dir))
     weights = list(list(model.children())[0].children())[-1].weight.cpu()
     biases = list(list(model.children())[0].children())[-1].bias.cpu()
     model = CamModel(model, "layer4")
@@ -47,12 +48,11 @@ def main():
 
             i = 0
             for cam, image in zip(cams, X):
-
+                
                 image = image.permute(1, 2, 0).detach()
                 image = image * torch.tensor([[0.229, 0.224, 0.225]]) + torch.tensor([[0.485, 0.456, 0.406]])
                 image = (image * 255).to(torch.uint8).numpy()
 
-                
                 cam0 = cv2.applyColorMap(cam[0], cv2.COLORMAP_JET)
                 cam1 = cv2.applyColorMap(cam[1], cv2.COLORMAP_JET)
                 result0 = 0.3 * cam0 + 0.5 * image
@@ -94,7 +94,6 @@ def create_cam(feature_maps, weights, biases):
     maps = torch.matmul(weights, feature_maps.view(batch_size, n_channels, height * width))
     maps = maps.view(batch_size, n_classes, height, width)
     maps = maps + biases.view(1, -1, 1, 1)
-    maps = maps - maps.min()
     maps = maps / maps.max() 
     maps = (maps * 255)
     maps = F.interpolate(maps, size=(224, 224), mode="bilinear", align_corners=False)
@@ -105,7 +104,7 @@ def get_args():
     parser.add_argument("--data_dir", default="../dataset/", type=str)
     parser.add_argument("--batch_size", default=1, type=int) 
     parser.add_argument("--num_workers", default=4, type=int)
-    parser.add_argument("--checkpoint_dir", default="../checkpoints/net-epoch=12-val_loss=0.04.ckpt", type=str)
+    parser.add_argument("--checkpoint_dir", default="../checkpoints/net-epoch=12-val_loss=0.04.pth.tar", type=str)
     parser.add_argument("--cam_path", default="../class_activation_maps/", type=str)
     parser.add_argument("--num_batches", default=5, type=int)
     parser = pl.Trainer.add_argparse_args(parser)
