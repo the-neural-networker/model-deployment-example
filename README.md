@@ -32,9 +32,10 @@ python app.py
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/visualCalculus/model-deployment-example)
 
-Note: The following buildpacks are required to deploy on Heroku:
+Note: The following buildpacks are required to deploy on Heroku (see ```app.json```):
 
-1. Apt: https://github.com/heroku/heroku-buildpack-apt (for openCV to work)
+1. Python: https://github.com/heroku/heroku-buildpack-python (for gunicorn to work)
+2. Apt: https://github.com/heroku/heroku-buildpack-apt (for openCV to work)
 
 A link to my deployed model: https://cats-vs-dogs-pytorch-app.herokuapp.com/
 
