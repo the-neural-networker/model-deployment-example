@@ -13,9 +13,8 @@ First, install dependencies (a new python virtual environment is recommended).
 # clone project   
 git clone https://github.com/visualCalculus/model-deployment-example
 
-# install project   
+# install requirements   
 cd model-deployment-example
-pip install -e .
 pip install -r requirements.txt
  ```   
 ### Local Deployment
