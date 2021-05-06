@@ -1,12 +1,10 @@
 import os 
 import sys 
 sys.path.append(os.path.abspath(os.path.pardir))
-from PIL import Image
 
-import torch 
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 from torch.utils.data.dataset import random_split
-from torchvision import datasets, models, transforms 
+from torchvision import datasets, transforms 
 
 import pytorch_lightning as pl
 from torchvision.transforms.transforms import CenterCrop

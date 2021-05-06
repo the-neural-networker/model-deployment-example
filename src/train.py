@@ -2,7 +2,6 @@ import os
 import sys 
 sys.path.append(os.path.abspath(os.path.pardir))
 from argparse import ArgumentParser, Namespace
-import matplotlib.pyplot as plt
 
 import torch 
 from torchvision import transforms
