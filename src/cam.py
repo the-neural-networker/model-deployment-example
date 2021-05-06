@@ -40,7 +40,8 @@ def main():
 
     with torch.no_grad():
         for batch_idx, (X, y) in enumerate(dm.test_dataloader()):
-            feature_maps = model(X)
+            out, feature_maps = model(X)
+            _, y_hat = out.max(1)
             cams = create_cam(feature_maps, weights, biases)
             cams = cams.detach().numpy()
 
@@ -59,9 +60,10 @@ def main():
 
                 if not os.path.exists(args.cam_path):
                     os.makedirs(args.cam_path)
-
-                cv2.imwrite(args.cam_path + f"batch_{batch_idx}_index_{i}_cat.png", result0)
-                cv2.imwrite(args.cam_path + f"batch_{batch_idx}_index_{i}_dog.png", result1)
+                if y_hat == 0:
+                    cv2.imwrite(args.cam_path + f"batch_{batch_idx}_index_{i}_cat.png", result0)
+                else:
+                    cv2.imwrite(args.cam_path + f"batch_{batch_idx}_index_{i}_dog.png", result1)
                     
                 i += 1
             
