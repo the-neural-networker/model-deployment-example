@@ -7,6 +7,8 @@
 ## Description
 An example showcasing the deployment of a PyTorch model using Flask on Heroku. I'm using a very simple cats vs dogs classifer with 99% accuracy.
 
+![UI](misc/ui.png)
+
 ## How to run   
 First, install dependencies (a new python virtual environment is recommended).   
 ```bash
