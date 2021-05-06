@@ -13,29 +13,14 @@ import pytorch_lightning as pl
 
 from src.dataset import CatsVsDogsDataModule 
 from src.model import Net 
+from src.utils.transform import get_image_transforms
 
 import cv2
 
 def main():
     args = get_args() 
 
-    train_transform = transforms.Compose([
-            transforms.RandomResizedCrop(224),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406), 
-                std=(0.229, 0.224, 0.225))
-    ])
-
-    test_transform = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406), 
-                std=(0.229, 0.224, 0.225))
-    ])
+    train_transform, test_transform = get_image_transforms()
 
     dm = CatsVsDogsDataModule(
             data_dir=args.data_dir,
@@ -95,11 +80,11 @@ class CamModel(nn.Module):
                 break
 
         self.net = nn.Sequential(*self.children_list)
-        del self.model
         
     def forward(self,x):
+        out = self.model(x)
         x = self.net(x)
-        return x
+        return out, x
 
 def create_cam(feature_maps, weights, biases):
     batch_size, n_channels, height, width = feature_maps.shape 

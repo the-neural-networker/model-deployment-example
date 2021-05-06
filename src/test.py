@@ -12,28 +12,13 @@ from torchmetrics.functional import accuracy, precision, recall, auroc
 
 from src.dataset import CatsVsDogsDataModule 
 from src.model import Net 
+from src.utils.transform import get_image_transforms
 
 
 def main():
     args = get_args() 
 
-    train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=(0.485, 0.456, 0.406), 
-            std=(0.229, 0.224, 0.225))
-    ])
-
-    test_transform = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=(0.485, 0.456, 0.406), 
-            std=(0.229, 0.224, 0.225))
-    ])
+    train_transform, test_transform = get_image_transforms()
     
     dm = CatsVsDogsDataModule(
         data_dir=args.data_dir,
@@ -75,7 +60,7 @@ def get_args():
     parser.add_argument("--data_dir", default="../dataset/", type=str)
     parser.add_argument("--batch_size", default=64, type=int) 
     parser.add_argument("--num_workers", default=4, type=int)
-    parser.add_argument("--checkpoint_dir", default="./checkpoints/net-epoch=12-val_loss=0.04.ckpt", type=str)
+    parser.add_argument("--checkpoint_dir", default="../checkpoints/net-epoch=12-val_loss=0.04.ckpt", type=str)
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args() 
     return args
