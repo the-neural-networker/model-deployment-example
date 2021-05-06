@@ -10,7 +10,8 @@ from src.utils.transform import transform_image
 import cv2
 
 def get_model(checkpoint_dir):
-    model = Net.load_from_checkpoint(checkpoint_dir)
+    model = Net()
+    model.load_state_dict(torch.load(checkpoint_dir))
     model.eval()
     return model 
 
@@ -19,7 +20,7 @@ def get_cam_model(model):
     return model
 
 
-checkpoint_dir = "./checkpoints/net-epoch=12-val_loss=0.04.ckpt"
+checkpoint_dir = "./checkpoints/net-epoch=12-val_loss=0.04.pth.tar"
 model = get_model(checkpoint_dir)
 weights = list(list(model.children())[0].children())[-1].weight.cpu()
 biases = list(list(model.children())[0].children())[-1].bias.cpu()
