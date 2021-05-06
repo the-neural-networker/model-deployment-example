@@ -1,0 +1,6 @@
+{
+    "name": "Cats Vs Dogs Image Classifier",
+    "description": "Cats Vs Dogs Image Classifier built using PyTorch",
+    "repository": "https://github.com/visualCalculus/model-deployment-example",
+    "keywords": ["python", "flask", "pytorch", "bootstrap"]
+  }
