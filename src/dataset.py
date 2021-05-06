@@ -1,4 +1,6 @@
 import os 
+import sys 
+sys.path.append(os.path.abspath(os.path.pardir))
 from PIL import Image
 
 import torch 
@@ -8,6 +10,8 @@ from torchvision import datasets, models, transforms
 
 import pytorch_lightning as pl
 from torchvision.transforms.transforms import CenterCrop
+
+from src.utils.transform import get_image_transforms
 
 
 class CatsVsDogsDataModule(pl.LightningDataModule):
@@ -63,6 +67,7 @@ class CatsVsDogsDataModule(pl.LightningDataModule):
 
 if __name__ == "__main__":
     data_dir = "../dataset/"
+    train_transform, test_transform = get_image_transforms()
     dm = CatsVsDogsDataModule(data_dir=data_dir)
     dm.setup()
 
